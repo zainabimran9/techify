@@ -1,0 +1,294 @@
+<!-- Techify — Futuristic Animated Single-File Website
+     Purpose: Portfolio-ready, modern UI with CSS animations and small JS for interactivity.
+     Single HTML file: copy, edit, and host on GitHub/Netlify. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Techify — Digital Growth, Elevated</title>
+  <meta name="description" content="Techify — futuristic digital marketing agency demo. Modern animated UI, responsive, single-file HTML + CSS + tiny JS." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- variables & base ---------- */
+    :root{
+      --bg:#060712;
+      --card:#071427;
+      --muted:#9aa3b2;
+      --glass: rgba(255,255,255,0.03);
+      --accent1:#00e6ff;
+      --accent2:#7b61ff;
+      --neon: rgba(124,61,255,0.22);
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#eaf2ff;background:linear-gradient(180deg,#031026 0%,#06101a 100%);-webkit-font-smoothing:antialiased}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* ---------- layout ---------- */
+    .wrap{max-width:1200px;margin:28px auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:60px;height:60px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:flex;align-items:center;justify-content:center;color:#021018;font-weight:900;font-size:22px;box-shadow:0 8px 30px var(--neon)}
+    nav{display:flex;gap:14px;align-items:center}
+    nav a{padding:8px 10px;border-radius:10px;color:var(--muted);font-weight:600;transition:all .25s}
+    nav a:hover{color:white;background:var(--glass);transform:translateY(-3px)}
+    .hire{background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:10px 14px;border-radius:12px;color:#021018;font-weight:800;box-shadow:0 8px 30px rgba(0,230,255,0.08)}
+
+    /* ---------- hero ---------- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;margin-top:22px;align-items:center}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:28px;border-radius:var(--radius);backdrop-filter: blur(6px);box-shadow:0 10px 40px rgba(2,16,24,0.6)}
+    h1{margin:0 0 10px;font-size:36px;line-height:1.02}
+    .accent-text{background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    p.lead{margin:0 0 18px;color:var(--muted);line-height:1.6}
+
+    /* animated gradient underline */
+    .headline-wrap{position:relative;display:inline-block;padding-bottom:6px}
+    .headline-wrap::after{content:'';position:absolute;left:0;right:0;bottom:0;height:6px;border-radius:6px;background:linear-gradient(90deg,var(--accent1),var(--accent2));opacity:0.14;transform:scaleX(.2);transform-origin:left;animation:underline 2.6s ease-in-out infinite}
+    @keyframes underline{0%,24%{transform:scaleX(.2)}50%{transform:scaleX(1)}100%{transform:scaleX(.2)}}
+
+    /* CTA */
+    .ctas{display:flex;gap:12px;margin-top:12px}
+    .btn{padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);font-weight:800;background:transparent;color:white;cursor:pointer}
+    .btn-ghost{color:var(--muted)}
+
+    /* flying stats */
+    .stats{display:flex;gap:12px;margin-top:18px}
+    .stat{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;flex:1;text-align:center}
+    .stat strong{display:block;font-size:20px}
+
+    /* ---------- animated blobs (pseudo background) ---------- */
+    .blobs{position:fixed;left:-10%;top:-10%;width:60vw;height:60vh;pointer-events:none;opacity:0.6}
+    .blob{position:absolute;border-radius:50%;filter:blur(60px);mix-blend-mode:screen}
+    .b1{width:380px;height:380px;background:linear-gradient(90deg,var(--accent1),#4be1ff);left:4%;top:8%;animation:float1 6s ease-in-out infinite}
+    .b2{width:320px;height:320px;background:linear-gradient(90deg,var(--accent2),#6c5cff);right:8%;top:12%;animation:float2 7s ease-in-out infinite}
+    @keyframes float1{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-24px) translateX(10px)}}
+    @keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(18px) translateX(-6px)}}
+
+    /* ---------- services cards with hover lift ---------- */
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+    .service{background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;transition:transform .28s cubic-bezier(.2,.9,.2,1),box-shadow .28s}
+    .service:hover{transform:translateY(-10px) rotate(-0.5deg);box-shadow:0 30px 60px rgba(7,20,40,0.6)}
+    .service h3{margin:0 0 8px}
+    .service p{margin:0;color:var(--muted)}
+
+    /* ---------- case study grid with subtle 3D tilt on hover ---------- */
+    .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .case{position:relative;border-radius:12px;overflow:hidden;padding:0;background:linear-gradient(135deg,#041028,#0b1630);cursor:pointer;transform:perspective(800px);transition:transform .28s}
+    .case .thumb{height:150px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+    .case .meta{padding:12px}
+    .case:hover{transform:perspective(800px) rotateX(4deg) translateY(-6px)}
+
+    /* ---------- pricing / tiers ---------- */
+    .pricing{display:flex;gap:12px;margin-top:18px}
+    .tier{flex:1;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));transition:transform .25s}
+    .tier.featured{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021018;box-shadow:0 14px 40px rgba(0,230,255,0.08)}
+
+    /* ---------- team / avatars ---------- */
+    .team{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .member{min-width:160px;background:var(--card);padding:12px;border-radius:10px}
+    .avatar{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent2),var(--accent1));display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+
+    /* ---------- contact form ---------- */
+    form{display:grid;gap:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:18px;border-radius:12px;margin-top:18px}
+    input,textarea,select{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:#eaf2ff}
+    textarea{min-height:120px}
+
+    /* footer */
+    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* ---------- reveal animation (will be triggered via JS) ---------- */
+    .reveal{opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.2,1)}
+    .reveal.show{opacity:1;transform:none}
+
+    /* ---------- responsive ---------- */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr}
+      .services,.cases{grid-template-columns:repeat(2,1fr)}
+      .pricing{flex-direction:column}
+    }
+    @media (max-width:520px){
+      nav{display:none}
+      h1{font-size:24px}
+      .services,.cases{grid-template-columns:1fr}
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- animated background blobs -->
+  <div class="blobs" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">T</div>
+        <div>
+          <div style="font-weight:900">Techify</div>
+          <div style="font-size:13px;color:var(--muted)">Digital marketing — bold ideas</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#services">Services</a>
+        <a href="#cases">Work</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+        <a class="hire" href="#contact">Get a Quote</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="card reveal" data-delay="0">
+          <div class="headline-wrap"><h1>We scale growth with <span class="accent-text">creative systems</span></h1></div>
+          <p class="lead">Design-led funnels, performance marketing, and content that converts. We test fast, learn faster, and scale what works.</p>
+          <div class="ctas">
+            <button class="btn" onclick="document.location='#contact'">Work with us</button>
+            <button class="btn btn-ghost">Explore case studies</button>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><strong>+150%</strong><span class="small muted">Avg growth</span></div>
+            <div class="stat"><strong>300+</strong><span class="small muted">Campaigns</span></div>
+            <div class="stat"><strong>96%</strong><span class="small muted">Client retention</span></div>
+          </div>
+
+          <div class="services" id="services" style="margin-top:18px">
+            <div class="service reveal" data-delay="120"><h3>Paid Ads</h3><p>Full-funnel paid acquisition on Meta and Google. Creative, testing, scale.</p></div>
+            <div class="service reveal" data-delay="220"><h3>SEO & Content</h3><p>Technical SEO, content clusters, and growth-driven editorial plans.</p></div>
+            <div class="service reveal" data-delay="320"><h3>Conversion Design</h3><p>Landing pages, funnels and experiments that lift conversion rates.</p></div>
+          </div>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:12px">
+          <div class="card reveal" data-delay="80">
+            <div style="font-size:13px;color:var(--muted)">Latest wins</div>
+            <div style="margin-top:8px"><strong>BrandBoost</strong><div class="small muted">+120% revenue in 4 months</div></div>
+          </div>
+
+          <div class="card reveal" data-delay="160" style="text-align:center">
+            <div style="font-size:13px;color:var(--muted)">Free audit</div>
+            <div style="margin-top:10px"><button class="hire" onclick="document.location='#contact'">Request audit</button></div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="cases">
+        <h2 style="margin:18px 0">Selected work</h2>
+        <div class="cases">
+          <article class="case reveal" data-delay="80" tabindex="0">
+            <div class="thumb">BrandBoost</div>
+            <div class="meta"><h3>eCommerce scale play</h3><p class="muted small">Paid social + CRO drove a 3x ROAS increase.</p></div>
+          </article>
+
+          <article class="case reveal" data-delay="160" tabindex="0">
+            <div class="thumb">LocalLift</div>
+            <div class="meta"><h3>Local services funnel</h3><p class="muted small">30% more leads, 40% lower CPA after redesign.</p></div>
+          </article>
+
+          <article class="case reveal" data-delay="240" tabindex="0">
+            <div class="thumb">AppSpark</div>
+            <div class="meta"><h3>SaaS activation funnel</h3><p class="muted small">LTV-driven acquisition and onboarding experiments.</p></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <h2 style="margin:18px 0">Pricing</h2>
+        <div class="pricing">
+          <div class="tier reveal" data-delay="80">
+            <div style="font-weight:800">Starter</div>
+            <div style="font-size:26px;font-weight:900">$499 / mo</div>
+            <p class="muted small">Ads + basic landing optimization</p>
+          </div>
+
+          <div class="tier featured reveal" data-delay="160">
+            <div style="font-weight:800">Growth</div>
+            <div style="font-size:26px;font-weight:900">$1,499 / mo</div>
+            <p class="muted small">Multi-channel growth and content</p>
+          </div>
+
+          <div class="tier reveal" data-delay="240">
+            <div style="font-weight:800">Scale</div>
+            <div style="font-size:26px;font-weight:900">$3,999 / mo</div>
+            <p class="muted small">Full-funnel dedicated team</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="team">
+        <h2 style="margin:18px 0">Team</h2>
+        <div class="team">
+          <div class="member reveal" data-delay="80"><div style="display:flex;gap:10px;align-items:center"><div class="avatar">A</div><div><div style="font-weight:800">Aisha Khan</div><div class="small muted">Head of Strategy</div></div></div></div>
+          <div class="member reveal" data-delay="140"><div style="display:flex;gap:10px;align-items:center"><div class="avatar">O</div><div><div style="font-weight:800">Omar Rizvi</div><div class="small muted">Growth Lead</div></div></div></div>
+          <div class="member reveal" data-delay="200"><div style="display:flex;gap:10px;align-items:center"><div class="avatar">S</div><div><div style="font-weight:800">Sara Lee</div><div class="small muted">Creative Director</div></div></div></div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2 style="margin:18px 0">Contact</h2>
+        <form onsubmit="event.preventDefault(); alert('Thanks — form demo, not sending. Copy the code to hook up email.');">
+          <input type="text" placeholder="Your name" required>
+          <input type="email" placeholder="Email" required>
+          <select aria-label="service">
+            <option>Service interested in</option>
+            <option>Paid Ads</option>
+            <option>SEO</option>
+            <option>Conversion Design</option>
+          </select>
+          <textarea placeholder="Project summary (short)"></textarea>
+          <div style="display:flex;justify-content:flex-end">
+            <button class="hire" type="submit">Request quote</button>
+          </div>
+        </form>
+      </section>
+
+    </main>
+
+    <footer>
+      © <span id="year"></span> Techify — built for portfolio. Hosted: GitHub / Netlify.
+    </footer>
+  </div>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // reveal on scroll with delay support
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const el = entry.target;
+          const delay = parseInt(el.getAttribute('data-delay')||0);
+          setTimeout(()=> el.classList.add('show'), delay);
+          obs.unobserve(el);
+        }
+      });
+    }, {threshold:0.12});
+    reveals.forEach(r=>obs.observe(r));
+
+    // accessible keyboard tilt: small transform on focus for .case
+    document.querySelectorAll('.case').forEach(c=>{
+      c.addEventListener('mousemove', e=>{
+        const rect = c.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        c.style.transform = `perspective(800px) rotateX(${y*6}deg) rotateY(${x*10}deg) translateY(-6px)`;
+      });
+      c.addEventListener('mouseleave', ()=> c.style.transform = 'perspective(800px)');
+      c.addEventListener('focus', ()=> c.style.transform = 'perspective(800px) rotateX(4deg) translateY(-6px)');
+      c.addEventListener('blur', ()=> c.style.transform = 'perspective(800px)');
+    });
+  </script>
+</body>
+</html>
